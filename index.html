@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="calculator">
+            <h1>JavaScript <br><span>Age Calculator</span></h1>
+            <div class="input-box">
+                <input type="date" id="date">
+                <button onclick="calculateAge()">Calculate</button>
+            </div>
+            <p id="result"></p>
+            <p id="extra"></p>
+            <p id="zodiac"></p>
+        </div>
+    </div>
+
+    <script>
+        let userInput = document.getElementById("date");
+        userInput.max = new Date().toISOString().split("T")[0];
+        let result = document.getElementById("result");
+        let extra = document.getElementById("extra");
+        let zodiac = document.getElementById("zodiac");
+
+        function calculateAge() {
+            if (userInput.value === "") {
+                result.innerHTML = "Please select your birth date!";
+                extra.innerHTML = "";
+                return;
+            }
+
+            let birthDate = new Date(userInput.value);
+
+            let d1 = birthDate.getDate();
+            let m1 = birthDate.getMonth() + 1;
+            let y1 = birthDate.getFullYear();
+
+            let today = new Date();
+
+            let d2 = today.getDate();
+            let m2 = today.getMonth() + 1;
+            let y2 = today.getFullYear();
+
+            let d3, m3, y3;
+
+            y3 = y2 - y1;
+
+            if (m2 >= m1) {
+                m3 = m2 - m1;
+            } else {
+                y3--;
+                m3 = 12 + m2 - m1;
+            }
+
+            if (d2 >= d1) {
+                d3 = d2 - d1;
+            } else {
+                m3--;
+                d3 = getDaysInMonth(y1, m1) + d2 - d1;
+            }
+            if (m3 < 0) {
+                m3 = 11;
+                y3--;
+            }
+            result.innerHTML = `You are <span>${y3}</span> years, <span>${m3}</span> months, <span>${d3}</span> days old`;
+
+            let diffTime = today - birthDate;
+            let totalDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+            let nextBirthday = new Date(y2, m1 - 1, d1);
+            if (nextBirthday < today) {
+                nextBirthday.setFullYear(y2 + 1);
+            }
+            let diffNextBday = nextBirthday - today;
+            let daysLeft = Math.floor(diffNextBday / (1000 * 60 * 60 * 24));
+
+            extra.innerHTML = `🎉 You have lived <span>${totalDays}</span> days.<br>🎂 Your next birthday is in <span>${daysLeft}</span> days.`;
+            let sign = getZodiacSign(d1, m1);
+            zodiac.innerHTML = `Your Zodiac Sign is <span>${sign}</span>`;
+        }
+
+        function getDaysInMonth(year, month) {
+            return new Date(year, month, 0).getDate();
+        }
+
+        function getZodiacSign(day, month) {
+            if ((month == 1 && day >= 20) || (month == 2 && day <= 18)) {
+                return "Aquarius ♒";
+            } else if ((month == 2 && day >= 19) || (month == 3 && day <= 20)) {
+                return "Pisces ♓";
+            } else if ((month == 3 && day >= 21) || (month == 4 && day <= 19)) {
+                return "Aries ♈";
+            } else if ((month == 4 && day >= 20) || (month == 5 && day <= 20)) {
+                return "Taurus ♉";
+            } else if ((month == 5 && day >= 21) || (month == 6 && day <= 20)) {
+                return "Gemini ♊";
+            } else if ((month == 6 && day >= 21) || (month == 7 && day <= 22)) {
+                return "Cancer ♋";
+            } else if ((month == 7 && day >= 23) || (month == 8 && day <= 22)) {
+                return "Leo ♌";
+            } else if ((month == 8 && day >= 23) || (month == 9 && day <= 22)) {
+                return "Virgo ♍";
+            } else if ((month == 9 && day >= 23) || (month == 10 && day <= 22)) {
+                return "Libra ♎";
+            } else if ((month == 10 && day >= 23) || (month == 11 && day <= 21)) {
+                return "Scorpio ♏";
+            } else if ((month == 11 && day >= 22) || (month == 12 && day <= 21)) {
+                return "Sagittarius ♐";
+            } else {
+                return "Capricorn ♑";
+            }
+        }
+        
+    </script>
+</body>
+
+</html>
