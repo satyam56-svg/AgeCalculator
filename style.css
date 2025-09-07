@@ -11,13 +11,16 @@
     background: linear-gradient(135deg, #4203a9, #90bafc);
     color: #fff;
     padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .calculator {
     width: 100%;
     max-width: 600px;
-    margin-left: 10%;
-    margin-top: 10%;
+    margin: auto;
+    text-align: center;
 }
 
 .calculator h1 {
@@ -59,19 +62,6 @@
     cursor: pointer;
 }
 
-/* .input-box input::-webkit-calendar-picker-indicator {
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: auto;
-    height: auto;
-    position: absolute;
-    background-position: calc(100%-10px);
-    background-size: 30px;
-    cursor: pointer;
-} */
-
 #result, #extra, #zodiac {
     font-size: 22px;
     margin-top: 20px;
@@ -80,4 +70,39 @@
 #result span, #extra span, #zodiac span {
     color: #ffff76;
     font-weight: bold;
+}
+
+/* ✅ Responsiveness */
+@media (max-width: 768px) {
+    .calculator h1 {
+        font-size: 40px;
+    }
+
+    .input-box {
+        flex-direction: column;
+    }
+
+    .input-box input {
+        margin: 10px 0;
+        width: 100%;
+    }
+
+    .input-box button {
+        width: 100%;
+        padding: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .calculator h1 {
+        font-size: 28px;
+    }
+
+    #result, #extra, #zodiac {
+        font-size: 18px;
+    }
+
+    .input-box {
+        padding: 20px;
+    }
 }
